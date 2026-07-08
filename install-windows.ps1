@@ -41,6 +41,8 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle InlineView
 Set-PSReadLineOption -Colors @{ InlinePrediction = "`e[38;5;242;3m" }
 
+Set-Alias vi vim
+
 # WezTerm OSC 7 - report current directory to tab title
 function Send-WezTermOSC7 {
     $path = (Get-Location).Path
@@ -74,6 +76,14 @@ if (-not (Get-Command glow -ErrorAction SilentlyContinue)) {
     winget install charmbracelet.glow --accept-source-agreements --accept-package-agreements
 } else {
     Write-Host "glow already installed." -ForegroundColor Green
+}
+
+# Install vim via winget if not already installed
+if (-not (Get-Command vim -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing vim..." -ForegroundColor Cyan
+    winget install vim.vim --accept-source-agreements --accept-package-agreements
+} else {
+    Write-Host "vim already installed." -ForegroundColor Green
 }
 
 $marker = 'Send-WezTermOSC7'
